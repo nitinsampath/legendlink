@@ -1,6 +1,5 @@
 from fastapi import APIRouter, UploadFile
 from typing import Dict
-from db.models import Invoice
 
 router = APIRouter()
 
