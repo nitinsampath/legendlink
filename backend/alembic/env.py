@@ -8,8 +8,7 @@ from pathlib import Path
 # Add the parent directory to Python path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from app.models.financial_record import FinancialRecord  # Import your models
-from sqlmodel import SQLModel
+from app.models.financial_record import Base, FinancialRecord  # Import your models
 from app.core.config import settings
 
 # this is the Alembic Config object
@@ -19,7 +18,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Set SQLModel metadata for autogeneration
-target_metadata = SQLModel.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -28,17 +27,7 @@ target_metadata = SQLModel.metadata
 
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
+    """For generating migrations"""
     url = settings.DATABASE_URL
     context.configure(
         url=url,
@@ -52,7 +41,7 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    """Run migrations in 'online' mode."""
+    """For applying migrations"""
     configuration = {"sqlalchemy.url": settings.DATABASE_URL}
 
     connectable = engine_from_config(
