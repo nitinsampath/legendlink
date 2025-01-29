@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -6,6 +6,9 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "LegendLink"
     UPLOAD_DIR: str = "uploads"
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB in bytes
+
+    # OpenAI settings
+    OPENAI_API_KEY: str
 
     # Database settings
     POSTGRES_USER: str = "postgres"
@@ -16,9 +19,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = (
         f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
     )
-
-    class Config:
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_file=".env")
 
 
 settings = Settings()
